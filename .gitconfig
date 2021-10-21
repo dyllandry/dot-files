@@ -1,0 +1,9 @@
+[core]
+	editor = nvim
+[alias]
+	s = status
+	c = commit
+	b = branch
+[user]
+	email = dylanglandry@gmail.com
+	name = Dylan Landry
