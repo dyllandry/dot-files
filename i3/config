@@ -180,3 +180,9 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# From i3 repo readme: In order to use gaps you need to disable window
+# titlebars. This can be done by adding the following line to your config.
+gaps outer 0
+gaps inner 10
+
