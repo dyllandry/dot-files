@@ -5,10 +5,18 @@ set number relativenumber
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
+" So / is case-insensitive if all lower, or sensitive if varying.
+set ignorecase
+set smartcase
+
+set ts=2 sts=2 sw=2
+
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
-Plug 'vim-airline/vim-airline'
+" Airline
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 " telescope & deps
 	Plug 'sharkdp/fd'
@@ -17,7 +25,36 @@ Plug 'tpope/vim-commentary'
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope.nvim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+" NERDTree
+	Plug 'preservim/nerdtree'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'PhilRunninger/nerdtree-visual-selection'
+	Plug 'ryanoasis/vim-devicons'
+Plug 'pantharshit00/vim-prisma'
+" TypeScript
+	Plug 'HerringtonDarkholme/yats.vim'
+" JavaScript
+	Plug 'yuezk/vim-js'
+	Plug 'MaxMEllon/vim-jsx-pretty'
+" Html
+	Plug 'mattn/emmet-vim'
+" Snippets
+	Plug 'SirVer/ultisnips'
+	Plug 'honza/vim-snippets'
 call plug#end()
+
+" Ultisnips
+	" Disabled
+	let g:UltiSnipsExpandTrigger="<Nul>"
+	let g:UltiSnipsJumpForwardTrigger="<c-j>"
+	let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" vim-gitgutter
+	" Decrease delay for diff markers to appear.
+	set updatetime=100
 
 autocmd vimenter * ++nested colorscheme gruvbox
 
@@ -29,14 +66,16 @@ autocmd vimenter * ++nested colorscheme gruvbox
 	nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " taken from neoclide/coc.nvim readme
-	" Always show the signcolumn, otherwise it would shift the text each time
-	" diagnostics appear/become resolved.
-	if has("nvim-0.5.0") || has("patch-8.1.1564")
-	  " Recently vim can merge signcolumn and number column into one
-	  set signcolumn=number
-	else
-	  set signcolumn=yes
-	endif
+	" DYLAN: I don't like this, I dont want the line number column and
+	" sign column combined so they hide eachother.
+	" " Always show the signcolumn, otherwise it would shift the text each time
+	" " diagnostics appear/become resolved.
+	" if has("nvim-0.5.0") || has("patch-8.1.1564")
+	"   " Recently vim can merge signcolumn and number column into one
+	"   set signcolumn=number
+	" else
+	"   set signcolumn=yes
+	" endif
 
 	" Use tab for trigger completion with characters ahead and navigate.
 	" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -173,4 +212,32 @@ autocmd vimenter * ++nested colorscheme gruvbox
 	nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list.
 	nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" NERDTree
+	nnoremap <leader>n :NERDTreeFocus<CR>
+	nnoremap <C-n> :NERDTree<CR>
+	nnoremap <C-t> :NERDTreeToggle<CR>
+	nnoremap <C-f> :NERDTreeFind<CR>
+
+let g:airline#extensions#whitespace#enabled = 0
+" https://github.com/neoclide/coc.nvim/issues/1775
+" Bug where using <:CocList services> will turn block cursor to line cursor
+let g:coc_disable_transparent_cursor = 1
+
+" Transparent background
+	" autocmd so it runs after plugins that might change this
+	autocmd vimenter * hi Normal ctermbg=NONE
+	autocmd vimenter * hi SignColumn ctermbg=NONE
+	autocmd vimenter * hi GitGutterAdd ctermbg=NONE ctermfg=green
+	autocmd vimenter * hi GitGutterChange ctermbg=NONE ctermfg=yellow
+	autocmd vimenter * hi GitGutterChangeDelete ctermbg=NONE ctermfg=yellow
+	autocmd vimenter * hi GitGutterDelete ctermbg=NONE ctermfg=red
+
+let g:airline_theme='bubblegum'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+" let g:airline_symbols.colnr = 'c'
+let g:airline_symbols.maxlinenr = ' '
 
