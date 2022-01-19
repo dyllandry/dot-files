@@ -183,6 +183,10 @@ bar {
 
 # From i3 repo readme: In order to use gaps you need to disable window
 # titlebars. This can be done by adding the following line to your config.
+for_window [class="^.*"] border pixel 3
 gaps outer 0
 gaps inner 10
 
+# Start compositor for transparent windows
+# https://www.reddit.com/r/i3wm/comments/2yytvs/make_terminals_transparent/
+exec_always --no-startup-id "picom --config /home/spaceboy/.config/picom/picom.conf"
