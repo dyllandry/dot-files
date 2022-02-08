@@ -9,7 +9,7 @@ let mapleader=" "
 set ignorecase
 set smartcase
 
-set ts=2 sts=2 sw=2
+set ts=2 sts=2 sw=2 expandtab
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -39,11 +39,15 @@ Plug 'pantharshit00/vim-prisma'
 " JavaScript
 	Plug 'yuezk/vim-js'
 	Plug 'MaxMEllon/vim-jsx-pretty'
+" Typescript
+	Plug 'leafgarland/typescript-vim'
 " Html
 	Plug 'mattn/emmet-vim'
 " Snippets
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
+Plug 'dense-analysis/ale'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 " Ultisnips
@@ -241,3 +245,11 @@ endif
 " let g:airline_symbols.colnr = 'c'
 let g:airline_symbols.maxlinenr = ' '
 
+let g:ale_fixers = {
+\   'typescript': ['prettier'],
+\   'rust': ['rustfmt'],
+\}
+
+" So ale doesn't run every fixer and linter, just ones I've enabled.
+let g:ale_linters_explicit = 1
+let g:ale_fix_on_save = 1
